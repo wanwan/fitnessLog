@@ -1,4 +1,4 @@
-package org.zaregoto.apl.fitnesslog;
+package org.zaregoto.apl.fitnesslogger;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
