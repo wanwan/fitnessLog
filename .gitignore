@@ -3,10 +3,13 @@
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
+/.idea/inspectionProfiles/
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+*~
+#*#
 
 # Created by https://www.gitignore.io/api/android,intellij+iml
 
