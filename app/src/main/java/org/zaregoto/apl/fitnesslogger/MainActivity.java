@@ -1,10 +1,15 @@
 package org.zaregoto.apl.fitnesslogger;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<FitnessLog> mLogs = new ArrayList<>();
     private FitnessLogAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,28 @@ public class MainActivity extends AppCompatActivity {
             lv.setAdapter(mAdapter);
         }
 
+        String[] requirePermissions = {android.Manifest.permission.CAMERA,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE};
+        ArrayList<String> needPermissions = new ArrayList<>();
+        for (String permission: requirePermissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+                // 許可されている時の処理
+            } else {
+                // 拒否されている時の処理
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                    // 明示的に拒否されている場合
+                    // TODO: 現状このフローは考えない
+                    finish();
+                } else {
+                    needPermissions.add(permission);
+                }
+            }
+        }
+        if (needPermissions.size() > 0) {
+            ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), 0);
+        }
+
     }
 
     @Override
@@ -57,6 +85,25 @@ public class MainActivity extends AppCompatActivity {
             }
             //mImageView.setImageBitmap(imageBitmap);
         }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        switch (requestCode) {
+            case 0: { //ActivityCompat#requestPermissions()の第2引数で指定した値
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //許可された場合の処理
+                }else{
+                    //拒否された場合の処理
+                    // TODO:
+                    finish();
+                }
+                break;
+            }
+        }
+
     }
 
 
