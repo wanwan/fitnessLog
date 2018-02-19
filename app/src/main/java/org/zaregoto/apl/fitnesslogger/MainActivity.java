@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-            FitnessLog log = new FitnessLog();
-            log.setThumbnail(imageBitmap);
+            Date today = new Date();
+            FitnessLog log = new FitnessLog(today, imageBitmap, null);
+            //log.setThumbnail(imageBitmap);
             mLogs.add(log);
             if (null != mAdapter) {
                 mAdapter.notifyDataSetChanged();

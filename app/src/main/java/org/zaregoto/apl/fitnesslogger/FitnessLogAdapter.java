@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class FitnessLogAdapter extends ArrayAdapter<FitnessLog> {
 
     private LayoutInflater mInflater;
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     public FitnessLogAdapter(Context context, int resource, List<FitnessLog> objects) {
         super(context, resource, objects);
@@ -27,6 +32,7 @@ public class FitnessLogAdapter extends ArrayAdapter<FitnessLog> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView thumbnailView;
+        TextView mainText;
         FitnessLog log;
 
         if (null == convertView) {
@@ -42,6 +48,13 @@ public class FitnessLogAdapter extends ArrayAdapter<FitnessLog> {
                 Drawable d = new BitmapDrawable(r, bitmap);
                 thumbnailView.setImageDrawable(d);
             }
+        }
+
+        Date date = log.getDate();
+        String str = sdf.format(date);
+        mainText = convertView.findViewById(R.id.maintext);
+        if (null != mainText) {
+            mainText.setText(str);
         }
 
         return convertView;

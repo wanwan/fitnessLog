@@ -11,7 +11,10 @@ public class FitnessLog {
     private Bitmap thumbnail;
     private File photo;
 
-    public FitnessLog() {
+    public FitnessLog(Date date, Bitmap thumbnail, File photo) {
+        this.date = date;
+        this.thumbnail = thumbnail;
+        this.photo = photo;
     }
 
     public Date getDate() {
